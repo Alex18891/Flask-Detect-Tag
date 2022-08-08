@@ -4,14 +4,12 @@ from flask import Flask,render_template,Response
 import cv2
 import keyboard
 import yolotrainsimbolos
-from yolov5 import YOLOv5
+import torch
 from flaskwebgui import FlaskUI
 
 
 app = Flask(__name__)
-model_path = "C:/Users/Alexandre/yolov5/runs/train/exp2/weights/best.pt"
-device = "cuda:0" # or "cpu
-yolov5 = YOLOv5(model_path, device)
+yolov5 = torch.hub.load('ultralytics/yolov5','custom', path = 'model/best.pt')
 player = pyglet.media.Player()
 src = pyglet.media.load('C:/Users/Alexandre/PycharmProjects/pythonProject/pythonProject/audio/Inicio.mp3')
 player.queue(src)
@@ -58,7 +56,7 @@ def frames():
         if not ret:
             break
         else:
-            results = yolov5.predict(frame)
+            results = yolov5(frame)
             frame = np.squeeze(results.render())
             frame = cv2.copyMakeBorder(frame, 1, 1, 1, 1, cv2.BORDER_CONSTANT, value=[186, 82, 15])
             ret,buffer = cv2.imencode('.JPEG', frame)
