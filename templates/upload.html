@@ -1,0 +1,88 @@
+<html xmlns="http://www.w3.org/1999/html">
+    <head>
+        <meta charset="='UTF-8">
+        <meta name = "viewport" content="width=device.width,initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link href = "https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+        rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <title>Detectar símbolos Etiqueta</title>
+		<style>
+			.topnav {
+			  display: block;
+			  float: left;
+			  color: #000000;
+			  text-align: center;
+			  padding: 14px 16px;
+			  text-decoration: none;
+			  font-family: Calibri;
+			  font-size: 18px;
+			  border: 1px;
+			  padding: 7px;
+			}
+			 div#middle
+			{
+				min-width:200px;
+			}
+			div#middle > div > div
+			{
+				border:#000 1px solid;
+				padding:7px;
+			}
+			div#text
+            {
+                min-width:600px;
+            }
+            div#text > div > div
+            {
+                border:#000 1px solid;
+                padding:7px;
+            }
+		</style>
+	</head>
+	<body style="overflow-x:hidden; overflow-y: visible;background-color:#e6e6e6;">
+		<nav class = "navbar navbar-dark bg-light" style="box-shadow: 0 1px 2px 0 rgba(0,0,0,.2);">
+			<div id = "middle" >
+				<a class="topnav" href="#" >
+					<img src="https://i.postimg.cc/HnD1w2B3/icon.png" alt = "" width="20" height="21">
+				   Detetar símbolos etiqueta de roupa
+				</a>
+			</div>
+		</nav>
+		<div class="container">
+				<div class = "row" >
+					<div class = "col-6 mx-auto mt-5 text-center">
+						<div id = "text">
+							<h2 style=" color:#0073e6;">MY EYES - TAG</h2>
+							<form method="post" action="/" enctype="multipart/form-data">
+								<dl>
+									<p>
+										<input type="file" name="file" class="form-control" autocomplete="off" required>
+									</p>
+								</dl>
+								<p>
+									<input type="submit" class="btn btn-primary" value="Detetar Símbolos">
+								</p>
+							</form>
+							{% if filename %}
+								<div>
+									<img style="border: 1px solid #0073e6; margin:7px;" src="{{ url_for('display_result')}}">
+								</div>
+							{% endif %}
+							<h2 style="font-size: 24px;font-family: Calibri;">
+								{% with messages = get_flashed_messages() %}
+								  {% if messages %}
+									<p>
+									{% for message in messages %}
+									  <li>{{ message }}</li>
+									{% endfor %}
+									</p>
+								  {% endif %}
+								{% endwith %}
+							</h2>
+						 </div>
+					</div>
+				</div>
+			</div>
+	</body>
+</html>
+
