@@ -6,9 +6,8 @@ from yolov5 import YOLOv5
 from flask import Flask, flash
 torch.cuda.empty_cache()
 
-device = "cpu" # or "gpu
-model_path = "C:/Users/Alexandre/yolov5/runs/train/exp2/weights/best.pt"
-yolov5 = YOLOv5(model_path, device)
+yolov5 = torch.hub.load('ultralytics/yolov5','custom', path = 'model/best.pt')
+
 a = 0
 app = Flask(__name__)
 app.secret_key = "secret key"
@@ -33,7 +32,7 @@ dict_Results = {
     17: ('Símbolo Detetado: Secar na horizontal', "C:/Users/Alexandre/PycharmProjects/pythonProject/pythonProject/audio/Secarhorizontal.mp3")
 }
 def display_img(img):
-    results = yolov5.predict(img)
+    results = yolov5(img)
     predictions = results.pred[0]
     categories = predictions[:, 5]
     results = np.squeeze(results.render())
@@ -44,7 +43,7 @@ def display_img(img):
 
 
 def test_img(img):
-    results = yolov5.predict(img)
+    results = yolov5(img)
     # parse results
     predictions = results.pred[0]
     boxes = predictions[:, :4]  # x1, y1, x2, y2
